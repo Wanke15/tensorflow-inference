@@ -5,6 +5,8 @@ import org.tensorflow.Graph;
 import org.tensorflow.Session;
 import org.tensorflow.Tensor;
 
+import redis.clients.jedis.Jedis;
+
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.util.Arrays;
@@ -16,11 +18,14 @@ import java.util.Arrays;
  */
 public class Predictor {
     private Session sess;
+    // private Jedis jedis;
 
     public void init(String pbFile) throws IOException {
+        // jedis = new Jedis("localhost");
+        
         Graph graph = new Graph();
         // 这个graphBytes也可以从redis中读取
-        // byte[] graphBytes = jedis.get((TfModelKey).getBytes());
+        // byte[] graphBytes = jedis.get(("fm_model").getBytes());
         byte[] graphBytes = IOUtils.toByteArray(new FileInputStream(pbFile));
         graph.importGraphDef(graphBytes);
         sess = new Session(graph);
